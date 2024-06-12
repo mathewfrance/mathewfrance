@@ -28,6 +28,6 @@ Com quase seis anos de experiência em suporte técnico, estou em transição pa
 ## 📫 Como me Encontrar
 
 - LinkedIn: [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mathew-france/)<br/>
-- Email: [matheusfranca1202@gmail.com](mailto:matheusfranca1202@gmail.com) [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:matheusfranca1202@gmail.com)<br/>
+- Email: [matheusfranca1202@gmail.com](mailto:matheusfranca1202@gmail.com)<br/>
 
 - GitHub: [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mathewfrance/)
