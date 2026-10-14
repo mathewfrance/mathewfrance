@@ -23,14 +23,14 @@ const VARIANT = opt('variant', data.profile.theme);
 const OUT = path.resolve(opt('out', ROOT));
 
 // ---------------------------------------------------------------- temas
+// Só escuro: o painel fica escuro também no tema claro do navegador (fundo branco deixava o
+// painel claro sem contraste com a página). Os nomes de arquivo mantêm o sufixo -dark.
 const THEMES = {
   ops: {
     dark: { bg: '#0a0f1a', panel: '#0d1524', bar: '#111b2e', border: '#1f2b40', fg: '#d3dceb', dim: '#8494b0', accent: '#22d3ee', ok: '#34d399', warn: '#fbbf24', info: '#60a5fa', crit: '#f87171', idle: '#7b8aa3', prompt: '#a78bfa' },
-    light: { bg: '#f6f8fb', panel: '#ffffff', bar: '#eef2f7', border: '#d5dce8', fg: '#1a2333', dim: '#4f5d75', accent: '#0e7490', ok: '#047857', warn: '#a35207', info: '#1d4ed8', crit: '#b91c1c', idle: '#5b6578', prompt: '#6d28d9' },
   },
   phosphor: {
     dark: { bg: '#040905', panel: '#07110a', bar: '#0a180e', border: '#173520', fg: '#b8f5c8', dim: '#6aa67b', accent: '#39ff88', ok: '#39ff88', warn: '#f4d35e', info: '#7fe7c4', crit: '#ff6b6b', idle: '#5f8a6b', prompt: '#39ff88', fx: true },
-    light: { bg: '#f3f8f3', panel: '#fbfdfb', bar: '#e8f1ea', border: '#c4d9c9', fg: '#0f2e1a', dim: '#3f5f49', accent: '#0a7a3b', ok: '#0a7a3b', warn: '#7d5800', info: '#0b6b5a', crit: '#b42318', idle: '#55695b', prompt: '#0a7a3b' },
   },
 };
 if (!THEMES[VARIANT]) throw new Error(`variante desconhecida: ${VARIANT}`);
@@ -44,11 +44,27 @@ for (const h of data.hosts) {
 
 // ---------------------------------------------------------------- helpers
 const W = 840;
+const WM = 420; // compacta, servida em celular via <source media="(max-width: 600px)"> no README
 const MONO = `ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace`;
 const cw = (size) => size * 0.6; // largura estimada do caractere monoespaçado (estimativa conservadora)
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const fit = (s, max) => (s.length > max ? s.slice(0, max - 1) + '…' : s);
 const n = (v) => Math.round(v * 100) / 100;
+// Quebra por palavra em até `lines` linhas de `max` caracteres; o excedente vai para a última com "…".
+const wrap = (s, max, lines = Infinity) => {
+  const out = [];
+  let cur = null;
+  for (const word of String(s).trim().split(/\s+/)) {
+    const next = cur === null ? word : `${cur} ${word}`;
+    if (next.length > max && cur) {
+      out.push(cur);
+      cur = word;
+    } else cur = next;
+  }
+  out.push(cur); // texto vazio vira uma linha vazia, nunca "undefined"
+  if (out.length > lines) out.splice(lines - 1, Infinity, out.slice(lines - 1).join(' '));
+  return out.map((l) => fit(l, max));
+};
 
 // Aparece em `at` segundos (fade de `d`). Valor base = visível.
 const fadeIn = (at, d = 0.25) => {
@@ -87,46 +103,29 @@ ${body}
 const countBy = (hosts) => hosts.reduce((acc, h) => ((acc[h.status] = (acc[h.status] || 0) + 1), acc), {});
 
 // ---------------------------------------------------------------- hero (boot + radar)
-function hero(t) {
-  const { profile, boot, hosts } = data;
-  const x = 26;
-  const out = [];
-  const promptTxt = `${profile.user}@${profile.host}:~$ `;
+// Linha do prompt com o comando "digitado" (clip em degraus, um por caractere).
+function typedPrompt(t, x, y, fs) {
+  const promptTxt = `${data.profile.user}@${data.profile.host}:~$ `;
   const cmd = './whoami --verbose';
-  // linha 1: prompt + comando digitado (clip em degraus, um por caractere)
-  const cmdX = x + promptTxt.length * cw(13);
+  const cmdX = x + promptTxt.length * cw(fs);
   const steps = cmd.length;
   const typeStart = 0.4, typeEnd = 1.5;
-  const widths = Array.from({ length: steps + 1 }, (_, i) => n(i * cw(13) + (i ? 2 : 0)));
+  const widths = Array.from({ length: steps + 1 }, (_, i) => n(i * cw(fs) + (i ? 2 : 0)));
   const times = widths.map((_, i) => n((typeStart + ((typeEnd - typeStart) * i) / steps) / typeEnd));
-  out.push(`<clipPath id="typed"><rect x="${cmdX}" y="50" width="${widths.at(-1) + 4}" height="22"><animate attributeName="width" values="0;${widths.join(';')}" keyTimes="0;${times.join(';')}" calcMode="discrete" dur="${typeEnd}s" fill="freeze"/></rect></clipPath>`);
-  const promptAttrs = `font-size="13" fill="${t.prompt}" textLength="${n(promptTxt.trimEnd().length * cw(13))}" lengthAdjust="spacingAndGlyphs"`;
-  out.push(`<text x="${x}" y="66" ${promptAttrs}>${esc(promptTxt.trimEnd())}</text>`);
-  out.push(`<text x="${cmdX}" y="66" font-size="13" fill="${t.fg}" clip-path="url(#typed)">${esc(cmd)}</text>`);
+  const promptAttrs = `font-size="${fs}" fill="${t.prompt}" textLength="${n(promptTxt.trimEnd().length * cw(fs))}" lengthAdjust="spacingAndGlyphs"`;
+  const out = [
+    `<clipPath id="typed"><rect x="${cmdX}" y="${y - 16}" width="${widths.at(-1) + 4}" height="22"><animate attributeName="width" values="0;${widths.join(';')}" keyTimes="0;${times.join(';')}" calcMode="discrete" dur="${typeEnd}s" fill="freeze"/></rect></clipPath>`,
+    `<text x="${x}" y="${y}" ${promptAttrs}>${esc(promptTxt.trimEnd())}</text>`,
+    `<text x="${cmdX}" y="${y}" font-size="${fs}" fill="${t.fg}" clip-path="url(#typed)">${esc(cmd)}</text>`,
+  ];
+  // prompt final + cursor, posicionado depois das linhas de boot
+  const final = (at, fy) => `<g>${fadeIn(at, 0.1)}<text x="${x}" y="${fy + 6}" ${promptAttrs}>${esc(promptTxt.trimEnd())}</text>
+    <rect x="${x + promptTxt.length * cw(fs)}" y="${fy - 6}" width="8" height="15" fill="${t.accent}"><animate attributeName="opacity" values="1;0" dur="1s" calcMode="discrete" repeatCount="indefinite"/></rect></g>`;
+  return { out, final };
+}
 
-  // nome + papel
-  let at = 1.8;
-  out.push(`<g>${fadeIn(at, 0.4)}<text x="${x}" y="108" font-size="30" font-weight="700" fill="${t.accent}" letter-spacing="3">${esc(profile.name.toUpperCase())}</text></g>`);
-  at += 0.3;
-  out.push(`<g>${fadeIn(at, 0.4)}<text x="${x}" y="134" font-size="13" fill="${t.dim}" letter-spacing="1">${esc(profile.role)}</text></g>`);
-
-  // linhas de boot
-  let y = 170;
-  at += 0.4;
-  for (const line of boot) {
-    const tagColor = line.tag === 'OK' ? t.ok : t.warn;
-    const tag = line.tag.length === 2 ? ` ${line.tag} ` : line.tag.padEnd(4);
-    out.push(`<g>${fadeIn(at, 0.15)}<text x="${x}" y="${y}" font-size="13" fill="${t.fg}"><tspan fill="${t.dim}">[</tspan><tspan fill="${tagColor}" font-weight="700">${esc(tag)}</tspan><tspan fill="${t.dim}">]</tspan> ${esc(fit(line.text, 64))}</text></g>`);
-    y += 24;
-    at += 0.32;
-  }
-  // prompt final + cursor
-  out.push(`<g>${fadeIn(at, 0.1)}<text x="${x}" y="${y + 6}" ${promptAttrs}>${esc(promptTxt.trimEnd())}</text>
-    <rect x="${x + promptTxt.length * cw(13)}" y="${y - 6}" width="8" height="15" fill="${t.accent}"><animate attributeName="opacity" values="1;0" dur="1s" calcMode="discrete" repeatCount="indefinite"/></rect></g>`);
-  const h = y + 34;
-
-  // radar
-  const cx = 712, cy = 34 + (h - 34) / 2, r = Math.min(112, (h - 34) / 2 - 22);
+function radar(t, cx, cy, r, { blipFs = 9, countFs = 11 } = {}) {
+  const { hosts } = data;
   const rad = [];
   for (const k of [1, 2 / 3, 1 / 3]) rad.push(`<circle cx="${cx}" cy="${n(cy)}" r="${n(r * k)}" fill="none" stroke="${t.border}" stroke-width="1"/>`);
   rad.push(`<line x1="${cx - r}" y1="${n(cy)}" x2="${cx + r}" y2="${n(cy)}" stroke="${t.border}"/><line x1="${cx}" y1="${n(cy - r)}" x2="${cx}" y2="${n(cy + r)}" stroke="${t.border}"/>`);
@@ -150,13 +149,82 @@ function hero(t) {
     const phase = n((((360 - (deg % 360)) % 360) / 360) * 5);
     rad.push(`<circle cx="${bx}" cy="${by}" r="3.5" fill="${c}"/>
     <circle cx="${bx}" cy="${by}" r="3.5" fill="none" stroke="${c}" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="${phase}s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="${phase}s" repeatCount="indefinite"/></circle>
-    <text x="${n(bx + 7)}" y="${n(by + 3.5)}" font-size="9" fill="${t.dim}">${esc(hst.id.replace('HOST-', 'H'))}</text>`);
+    <text x="${n(bx + 7)}" y="${n(by + blipFs / 2 - 1)}" font-size="${blipFs}" fill="${t.dim}">${esc(hst.id.replace('HOST-', 'H'))}</text>`);
   });
   const c = countBy(hosts);
-  rad.push(`<text x="${cx}" y="${n(cy + r + 18)}" font-size="11" fill="${t.dim}" text-anchor="middle">${hosts.length} assets · ${c.ONLINE || 0} online · ${c.BUILDING || 0} building</text>`);
+  rad.push(`<text x="${cx}" y="${n(cy + r + 18)}" font-size="${countFs}" fill="${t.dim}" text-anchor="middle">${hosts.length} assets · ${c.ONLINE || 0} online · ${c.BUILDING || 0} building</text>`);
+  return rad;
+}
 
+const bootTag = (t, line) => {
+  const tagColor = line.tag === 'OK' ? t.ok : t.warn;
+  const tag = line.tag.length === 2 ? ` ${line.tag} ` : line.tag.padEnd(4);
+  return `<tspan fill="${t.dim}">[</tspan><tspan fill="${tagColor}" font-weight="700">${esc(tag)}</tspan><tspan fill="${t.dim}">]</tspan>`;
+};
+
+function hero(t) {
+  const { profile, boot } = data;
+  const x = 26;
+  const { out, final } = typedPrompt(t, x, 66, 13);
+
+  // nome + papel
+  let at = 1.8;
+  out.push(`<g>${fadeIn(at, 0.4)}<text x="${x}" y="108" font-size="30" font-weight="700" fill="${t.accent}" letter-spacing="3">${esc(profile.name.toUpperCase())}</text></g>`);
+  at += 0.3;
+  out.push(`<g>${fadeIn(at, 0.4)}<text x="${x}" y="134" font-size="13" fill="${t.dim}" letter-spacing="1">${esc(profile.role)}</text></g>`);
+
+  // linhas de boot
+  let y = 170;
+  at += 0.4;
+  for (const line of boot) {
+    out.push(`<g>${fadeIn(at, 0.15)}<text x="${x}" y="${y}" font-size="13" fill="${t.fg}">${bootTag(t, line)} ${esc(fit(line.text, 64))}</text></g>`);
+    y += 24;
+    at += 0.32;
+  }
+  out.push(final(at, y));
+  const h = y + 34;
+
+  // radar
+  const rad = radar(t, 712, 34 + (h - 34) / 2, Math.min(112, (h - 34) / 2 - 22));
   return frame(t, {
     h,
+    title: `${profile.login}.sec — boot.log`,
+    right: 'tty1',
+    body: out.join('\n') + '\n' + rad.join('\n'),
+    fx: true,
+  });
+}
+
+// Compacta (celular): boot em largura total com quebra de linha, radar embaixo.
+function heroM(t) {
+  const { profile, boot } = data;
+  const w = WM, x = 22, fs = 14;
+  const { out, final } = typedPrompt(t, x, 64, fs);
+  let at = 1.8;
+  out.push(`<g>${fadeIn(at, 0.4)}<text x="${x}" y="106" font-size="28" font-weight="700" fill="${t.accent}" letter-spacing="2">${esc(profile.name.toUpperCase())}</text></g>`);
+  at += 0.3;
+  out.push(`<g>${fadeIn(at, 0.4)}<text x="${x}" y="132" font-size="13" fill="${t.dim}">${esc(fit(profile.role, Math.floor((w - 2 * x) / cw(13))))}</text></g>`);
+
+  // "[ OK ] " ocupa 7 colunas; a continuação repete a tag invisível como recuo, então alinha
+  // com o texto em qualquer fonte (não depende da largura estimada do caractere)
+  const cols = Math.floor((w - 2 * x) / cw(fs));
+  let y = 166;
+  at += 0.4;
+  for (const line of boot) {
+    const [first, ...rest] = wrap(line.text.replace(/ \.{4,} /, ' ... '), cols - 7, 3);
+    const parts = [`<text x="${x}" y="${y}" font-size="${fs}" fill="${t.fg}">${bootTag(t, line)} ${esc(first)}</text>`];
+    for (const l of rest) parts.push(`<text x="${x}" y="${(y += 20)}" font-size="${fs}" fill="${t.fg}"><tspan visibility="hidden">${bootTag(t, line)}</tspan> ${esc(l)}</text>`);
+    out.push(`<g>${fadeIn(at, 0.15)}${parts.join('')}</g>`);
+    y += 26;
+    at += 0.32;
+  }
+  out.push(final(at, y));
+
+  const r = 96, cy = y + 34 + r;
+  const rad = radar(t, w / 2, cy, r, { blipFs: 11, countFs: 12.5 });
+  return frame(t, {
+    w,
+    h: cy + r + 44,
     title: `${profile.login}.sec — boot.log`,
     right: 'tty1',
     body: out.join('\n') + '\n' + rad.join('\n'),
@@ -286,6 +354,112 @@ function stack(t) {
   return frame(t, { h: 80 + rowsN * cardH + (rowsN - 1) * gap + 24, title: 'packages — installed stack', right: `${layers.reduce((s, l) => s + l.items.length, 0)} pkgs`, body: out.join('\n'), fx: true });
 }
 
+// ---------------------------------------------------------------- versões compactas (celular)
+// Largura WM, fonte maior em relação à largura e uma coluna: em 375px o texto fica perto de 10px.
+function hostsPanelM(t) {
+  const { hosts } = data;
+  const w = WM, x = 22;
+  const c = countBy(hosts);
+  const out = [];
+  out.push(`<text x="${x}" y="60" font-size="12" fill="${t.dim}" letter-spacing="1">MONITORED ASSETS</text>`);
+  // contadores em fluxo, quebrando linha quando não cabem
+  let sx = x, sy = 84;
+  for (const st of Object.keys(STATUS_COLOR)) {
+    if (!c[st]) continue;
+    const label = `${c[st]} ${st.toLowerCase()}`;
+    const lw = 9 + label.length * cw(12.5);
+    if (sx > x && sx + lw > w - x) (sx = x), (sy += 22);
+    const col = t[STATUS_COLOR[st]];
+    out.push(`<circle cx="${n(sx + 3.5)}" cy="${sy - 4}" r="3.5" fill="${col}"/><text x="${n(sx + 12.5)}" y="${sy}" font-size="12.5" fill="${t.fg}">${esc(label)}</text>`);
+    sx += lw + 22;
+  }
+  let y = sy + 16;
+  out.push(`<line x1="${x}" y1="${y}" x2="${w - x}" y2="${y}" stroke="${t.border}"/>`);
+  y += 30;
+
+  const cols = Math.floor((w - 2 * x - 22) / cw(13));
+  hosts.forEach((h, i) => {
+    const col = t[STATUS_COLOR[h.status]];
+    const pw = h.status.length * cw(11) + 16;
+    const led = STATUS_BLINK[h.status]
+      ? `<circle cx="${x + 5}" cy="${y - 5}" r="5" fill="${col}">${blink(STATUS_BLINK[h.status])}</circle><circle cx="${x + 5}" cy="${y - 5}" r="9" fill="${col}" opacity="0.15"/>`
+      : `<circle cx="${x + 5}" cy="${y - 5}" r="5" fill="none" stroke="${col}" stroke-width="1.5"/>`;
+    const nameX = x + 22 + 8 * cw(12);
+    const nameMax = Math.floor((w - x - pw - 10 - nameX) / cw(15));
+    const name = h.url ? `${h.name} ↗` : h.name;
+    // linha 2: tipo + papel (até 2 linhas); linha 3: stack
+    const [r1, ...rN] = wrap(`${h.kind} · ${h.role}`, cols, 2);
+    const role = [`<text x="${x + 22}" y="${y + 23}" font-size="13" fill="${t.dim}"><tspan fill="${t.accent}">${esc(h.kind)}</tspan>${esc(r1.slice(h.kind.length))}</text>`];
+    rN.forEach((l, j) => role.push(`<text x="${x + 22}" y="${y + 23 + (j + 1) * 19}" font-size="13" fill="${t.dim}">${esc(l)}</text>`));
+    const sy3 = y + 23 + rN.length * 19 + 21;
+    const stk = wrap(h.stack.join(' / '), Math.floor((w - 2 * x - 22) / cw(12.5)), 2).map((l, j) => `<text x="${x + 22}" y="${sy3 + j * 18}" font-size="12.5" fill="${t.idle}">${esc(l)}</text>`);
+    out.push(`<g>${fadeIn(0.2 + i * 0.12, 0.3)}
+    ${led}
+    <text x="${x + 22}" y="${y}" font-size="12" fill="${t.dim}">${esc(h.id)}</text>
+    <text x="${n(nameX)}" y="${y}" font-size="15" font-weight="700" fill="${t.fg}">${esc(fit(name, nameMax))}</text>
+    <rect x="${n(w - x - pw)}" y="${y - 15}" width="${n(pw)}" height="20" rx="4" fill="${col}" fill-opacity="0.12" stroke="${col}" stroke-opacity="0.6"/>
+    <text x="${n(w - x - pw / 2)}" y="${y - 1}" font-size="11" font-weight="700" fill="${col}" text-anchor="middle" letter-spacing="0.5">${esc(h.status)}</text>
+    ${role.join('')}
+    ${stk.join('')}
+  </g>`);
+    y = sy3 + (stk.length - 1) * 18 + 20;
+    if (i < hosts.length - 1) out.push(`<line x1="${x}" y1="${y}" x2="${w - x}" y2="${y}" stroke="${t.border}" stroke-dasharray="2 4"/>`);
+    y += 30;
+  });
+  return frame(t, { w, h: y - 6, title: 'asset-inventory — status board', right: `${hosts.length} hosts`, body: out.join('\n'), fx: true });
+}
+
+function feedM(t, events) {
+  const rows = events.slice(0, 8);
+  const w = WM, x = 22, fs = 13;
+  const out = [];
+  const lvl = { INFO: t.ok, WARN: t.warn, CRIT: t.crit };
+  out.push(`<text x="${x}" y="60" font-size="12" fill="${t.dim}">$ tail -f /var/log/${esc(data.profile.login)}/ops.log</text>`);
+  let y = 92;
+  const top = y - 18;
+  const cols = Math.floor((w - 2 * x) / cw(fs));
+  rows.forEach((e, i) => {
+    const ts = e.ts.slice(0, 16).replace('T', ' ');
+    // linha 1: carimbo + nível + host no mesmo <text> (sem depender da largura da fonte)
+    const head = `<text x="${x}" y="${y}" font-size="12.5" fill="${t.dim}">${esc(ts)} <tspan dx="6" font-weight="700" fill="${lvl[e.level] || t.info}">${esc(e.level)}</tspan> <tspan dx="6" fill="${t.accent}">${esc(e.host)}</tspan></text>`;
+    const msg = wrap(e.msg, cols, 2).map((l, j) => `<text x="${x}" y="${y + 21 + j * 19}" font-size="${fs}" fill="${t.fg}">${esc(l)}</text>`);
+    out.push(`<g>${fadeIn(0.3 + i * 0.18, 0.2)}${head}${msg.join('')}</g>`);
+    y += 21 + (msg.length - 1) * 19 + 30;
+  });
+  // barra de varredura descendo pelas entradas
+  const bottom = y - 30 + 8;
+  out.push(`<rect x="${x - 8}" y="${top}" width="${w - 2 * x + 16}" height="44" fill="${t.accent}" opacity="0.07"><animate attributeName="y" values="${top};${bottom - 44};${top}" keyTimes="0;0.9;1" dur="8s" begin="2s" repeatCount="indefinite"/></rect>`);
+  y -= 4;
+  out.push(`<text x="${x}" y="${y}" font-size="${fs}" fill="${t.prompt}">▍<animate attributeName="opacity" values="1;0" dur="1s" calcMode="discrete" repeatCount="indefinite"/></text>`);
+  return frame(t, { w, h: y + 22, title: 'event-stream — siem view', right: `<tspan fill="${t.crit}">●</tspan> LIVE`, body: out.join('\n'), fx: true });
+}
+
+function stackM(t) {
+  const layers = data.stack;
+  const w = WM, x0 = 22, gap = 12, fs = 13, lineH = 21;
+  const cardW = w - 2 * x0, px = x0 + 14;
+  const cols = Math.floor((cardW - 28) / cw(fs));
+  const out = [];
+  out.push(`<text x="${x0}" y="60" font-size="12" fill="${t.dim}">$ dpkg -l --installed-by=${esc(data.profile.login)}</text>`);
+  let cy = 78;
+  layers.forEach((l, i) => {
+    // itens em fluxo, sem quebrar item; cada linha é um único <text> (não depende da largura da fonte)
+    const lines = [];
+    for (const it of l.items.map((s) => fit(s, cols - 2))) {
+      const last = lines.at(-1);
+      if (last && last.len + 3 + it.length + 2 <= cols) last.items.push(it), (last.len += 3 + it.length + 2);
+      else lines.push({ items: [it], len: it.length + 2 });
+    }
+    const cardH = 44 + lines.length * lineH;
+    const items = lines.map((ln, k) => `<text x="${px}" y="${cy + 54 + k * lineH}" font-size="${fs}" fill="${t.fg}">${ln.items.map((it, j) => `<tspan${j ? ' dx="14"' : ''} fill="${t.accent}">›</tspan> ${esc(it)}`).join(' ')}</text>`).join('');
+    out.push(`<g>${fadeIn(0.2 + i * 0.15, 0.3)}<rect x="${x0}" y="${cy}" width="${cardW}" height="${cardH}" rx="6" fill="${t.bg}" stroke="${t.border}"/>
+    <text x="${px}" y="${cy + 24}" font-size="11.5" font-weight="700" fill="${t.accent}" letter-spacing="1.5">${esc(l.layer)}</text>
+    <line x1="${px}" y1="${cy + 33}" x2="${x0 + cardW - 14}" y2="${cy + 33}" stroke="${t.border}"/>${items}</g>`);
+    cy += cardH + gap;
+  });
+  return frame(t, { w, h: cy - gap + 22, title: 'packages — installed stack', right: `${layers.reduce((s, l) => s + l.items.length, 0)} pkgs`, body: out.join('\n'), fx: true });
+}
+
 // ---------------------------------------------------------------- README (bloco gerado)
 function linksBlock() {
   const live = data.hosts.filter((h) => h.url);
@@ -305,11 +479,15 @@ async function updateReadme() {
 const events = [...data.log, ...(await publicEvents())].sort((a, b) => b.ts.localeCompare(a.ts));
 await mkdir(path.join(OUT, 'assets'), { recursive: true });
 const written = [];
-for (const mode of ['dark', 'light']) {
+for (const mode of Object.keys(THEMES[VARIANT])) {
   const t = THEMES[VARIANT][mode];
-  const files = { hero: hero(t), hosts: hostsPanel(t), feed: feed(t, events), stack: stack(t) };
+  const files = {
+    hero: hero(t), hosts: hostsPanel(t), feed: feed(t, events), stack: stack(t),
+    'hero-m': heroM(t), 'hosts-m': hostsPanelM(t), 'feed-m': feedM(t, events), 'stack-m': stackM(t),
+  };
   for (const [name, svg] of Object.entries(files)) {
-    const f = path.join(OUT, 'assets', `${name}-${mode}.svg`);
+    const [base, suffix] = name.split('-'); // hero-m → assets/hero-dark-m.svg
+    const f = path.join(OUT, 'assets', `${base}-${mode}${suffix ? `-${suffix}` : ''}.svg`);
     await writeFile(f, svg);
     written.push(`${path.relative(OUT, f)} (${svg.length} B)`);
   }

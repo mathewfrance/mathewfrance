@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="672" viewBox="0 0 420 672" role="img" aria-label="mathewfrance.sec — boot.log">
+<title>mathewfrance.sec — boot.log</title>
+<defs>
+  
+  <clipPath id="win"><rect width="420" height="672" rx="10"/></clipPath>
+</defs>
+<style>text{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;}</style>
+<g clip-path="url(#win)">
+  <rect width="420" height="672" fill="#0d1524"/>
+  <rect width="420" height="34" fill="#111b2e"/>
+  <line x1="0" y1="34" x2="420" y2="34" stroke="#1f2b40"/>
+  <circle cx="20" cy="17" r="4" fill="#22d3ee"><animate attributeName="opacity" values="1;0.25;1" dur="2s" repeatCount="indefinite"/></circle>
+  <text x="34" y="21.5" font-size="12" fill="#8494b0" letter-spacing="0.5">mathewfrance.sec — boot.log</text>
+  <text x="402" y="21.5" font-size="12" fill="#8494b0" text-anchor="end">tty1</text>
+  <g>
+<clipPath id="typed"><rect x="173.20000000000002" y="48" width="157.2" height="22"><animate attributeName="width" values="0;0;10.4;18.8;27.2;35.6;44;52.4;60.8;69.2;77.6;86;94.4;102.8;111.2;119.6;128;136.4;144.8;153.2" keyTimes="0;0.27;0.31;0.35;0.39;0.43;0.47;0.51;0.55;0.59;0.63;0.67;0.71;0.76;0.8;0.84;0.88;0.92;0.96;1" calcMode="discrete" dur="1.5s" fill="freeze"/></rect></clipPath>
+<text x="22" y="64" font-size="14" fill="#a78bfa" textLength="142.8" lengthAdjust="spacingAndGlyphs">mathew@sec-ops:~$</text>
+<text x="173.20000000000002" y="64" font-size="14" fill="#d3dceb" clip-path="url(#typed)">./whoami --verbose</text>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.82;1" dur="2.2s" fill="freeze"/><text x="22" y="106" font-size="28" font-weight="700" fill="#22d3ee" letter-spacing="2">MATHEUS FRANÇA</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.84;1" dur="2.5s" fill="freeze"/><text x="22" y="132" font-size="13" fill="#8494b0">Software Developer · SOC Monitoring Analyst</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.94;1" dur="2.65s" fill="freeze"/><text x="22" y="166" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan> init &gt; uplink to</text><text x="22" y="186" font-size="14" fill="#d3dceb"><tspan visibility="hidden"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan></tspan> github.com/mathewfrance established</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.95;1" dur="2.97s" fill="freeze"/><text x="22" y="212" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan> 2018 &gt; IT support: endpoints,</text><text x="22" y="232" font-size="14" fill="#d3dceb"><tspan visibility="hidden"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan></tspan> networks, users, tickets</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.95;1" dur="3.29s" fill="freeze"/><text x="22" y="258" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan> edu &gt; Graduated in Cyber Defense</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.96;1" dur="3.61s" fill="freeze"/><text x="22" y="284" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan> now &gt; software developer by day, SOC</text><text x="22" y="304" font-size="14" fill="#d3dceb"><tspan visibility="hidden"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan></tspan> monitoring by night</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.96;1" dur="3.93s" fill="freeze"/><text x="22" y="330" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan> mode &gt; AI-assisted engineering:</text><text x="22" y="350" font-size="14" fill="#d3dceb"><tspan visibility="hidden"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan></tspan> design &gt; build &gt; verify &gt; learn</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.96;1" dur="4.25s" fill="freeze"/><text x="22" y="376" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#fbbf24" font-weight="700">RUN </tspan><tspan fill="#8494b0">]</tspan> loading monitored assets ... 7 found</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.98;1" dur="4.52s" fill="freeze"/><text x="22" y="408" font-size="14" fill="#a78bfa" textLength="142.8" lengthAdjust="spacingAndGlyphs">mathew@sec-ops:~$</text>
+    <rect x="173.20000000000002" y="396" width="8" height="15" fill="#22d3ee"><animate attributeName="opacity" values="1;0" dur="1s" calcMode="discrete" repeatCount="indefinite"/></rect></g>
+<circle cx="210" cy="532" r="96" fill="none" stroke="#1f2b40" stroke-width="1"/>
+<circle cx="210" cy="532" r="64" fill="none" stroke="#1f2b40" stroke-width="1"/>
+<circle cx="210" cy="532" r="32" fill="none" stroke="#1f2b40" stroke-width="1"/>
+<line x1="114" y1="532" x2="306" y2="532" stroke="#1f2b40"/><line x1="210" y1="436" x2="210" y2="628" stroke="#1f2b40"/>
+<g><path d="M210,532 L306,532 A96,96 0 0,0 303.9,512.04 Z" fill="#22d3ee" opacity="0.3"/><path d="M210,532 L303.9,512.04 A96,96 0 0,0 296.28,489.92 Z" fill="#22d3ee" opacity="0.17"/><path d="M210,532 L296.28,489.92 A96,96 0 0,0 277.88,464.12 Z" fill="#22d3ee" opacity="0.08"/>
+    <line x1="210" y1="532" x2="306" y2="532" stroke="#22d3ee" stroke-width="1.5" opacity="0.9"/>
+    <animateTransform attributeName="transform" type="rotate" from="0 210 532" to="360 210 532" dur="5s" repeatCount="indefinite"/></g>
+<circle cx="274.95" cy="508.36" r="3.5" fill="#22d3ee"/>
+    <circle cx="274.95" cy="508.36" r="3.5" fill="none" stroke="#22d3ee" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="4.72s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="4.72s" repeatCount="indefinite"/></circle>
+    <text x="281.95" y="512.86" font-size="11" fill="#8494b0">H01</text>
+<circle cx="232.01" cy="466.48" r="3.5" fill="#22d3ee"/>
+    <circle cx="232.01" cy="466.48" r="3.5" fill="none" stroke="#22d3ee" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="4.01s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="4.01s" repeatCount="indefinite"/></circle>
+    <text x="239.01" y="470.98" font-size="11" fill="#8494b0">H02</text>
+<circle cx="181.35" cy="487.65" r="3.5" fill="#60a5fa"/>
+    <circle cx="181.35" cy="487.65" r="3.5" fill="none" stroke="#60a5fa" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="3.29s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="3.29s" repeatCount="indefinite"/></circle>
+    <text x="188.35" y="492.15" font-size="11" fill="#8494b0">H03</text>
+<circle cx="125.94" cy="523.59" r="3.5" fill="#7b8aa3"/>
+    <circle cx="125.94" cy="523.59" r="3.5" fill="none" stroke="#7b8aa3" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="2.58s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="2.58s" repeatCount="indefinite"/></circle>
+    <text x="132.94" y="528.09" font-size="11" fill="#8494b0">H04</text>
+<circle cx="184.53" cy="558.11" r="3.5" fill="#34d399"/>
+    <circle cx="184.53" cy="558.11" r="3.5" fill="none" stroke="#34d399" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="1.87s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="1.87s" repeatCount="indefinite"/></circle>
+    <text x="191.53" y="562.61" font-size="11" fill="#8494b0">H05</text>
+<circle cx="217.4" cy="591.06" r="3.5" fill="#fbbf24"/>
+    <circle cx="217.4" cy="591.06" r="3.5" fill="none" stroke="#fbbf24" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="1.15s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="1.15s" repeatCount="indefinite"/></circle>
+    <text x="224.4" y="595.56" font-size="11" fill="#8494b0">H06</text>
+<circle cx="241.13" cy="551.02" r="3.5" fill="#34d399"/>
+    <circle cx="241.13" cy="551.02" r="3.5" fill="none" stroke="#34d399" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="0.44s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="0.44s" repeatCount="indefinite"/></circle>
+    <text x="248.13" y="555.52" font-size="11" fill="#8494b0">H07</text>
+<text x="210" y="646" font-size="12.5" fill="#8494b0" text-anchor="middle">7 assets · 2 online · 2 building</text>
+  </g>
+  
+</g>
+<rect x="0.5" y="0.5" width="419" height="671" rx="10" fill="none" stroke="#1f2b40"/>
+</svg>

@@ -1,5 +1,5 @@
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
+  <source media="(max-width: 600px)" srcset="assets/hero-dark-m.svg">
   <img alt="Terminal boot log: Matheus França, software developer by day and SOC monitoring analyst by night, with a radar tracking 7 projects" src="assets/hero-dark.svg" width="100%">
 </picture>
 
@@ -11,7 +11,7 @@
 ### `▸ monitored assets`
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="assets/hosts-light.svg">
+  <source media="(max-width: 600px)" srcset="assets/hosts-dark-m.svg">
   <img alt="Status board with the projects I am running: gym-app, space-agent, prova.ai, veste.ai, amandavidal.adv.br, efs-sports and claude-kit" src="assets/hosts-dark.svg" width="100%">
 </picture>
 
@@ -22,14 +22,14 @@
 ### `▸ event stream`
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="assets/feed-light.svg">
+  <source media="(max-width: 600px)" srcset="assets/feed-dark-m.svg">
   <img alt="Recent activity log: deploys, releases and public commits" src="assets/feed-dark.svg" width="100%">
 </picture>
 
 ### `▸ installed stack`
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="assets/stack-light.svg">
+  <source media="(max-width: 600px)" srcset="assets/stack-dark-m.svg">
   <img alt="Stack by layer: frontend, backend, data, cloud and infra, security ops, AI engineering" src="assets/stack-dark.svg" width="100%">
 </picture>
 
