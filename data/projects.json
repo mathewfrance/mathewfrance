@@ -4,7 +4,7 @@
     "login": "mathewfrance",
     "user": "mathew",
     "name": "Matheus França",
-    "role": "Cyber Monitoring Analyst · Software Builder",
+    "role": "Software Developer · SOC Monitoring Analyst",
     "host": "sec-ops",
     "theme": "ops"
   },
@@ -12,7 +12,7 @@
     { "tag": "OK", "text": "init  > uplink to github.com/mathewfrance established" },
     { "tag": "OK", "text": "2018  > IT support: endpoints, networks, users, tickets" },
     { "tag": "OK", "text": "edu   > Graduated in Cyber Defense" },
-    { "tag": "OK", "text": "now   > SOC monitoring by day, shipping software by night" },
+    { "tag": "OK", "text": "now   > software developer by day, SOC monitoring by night" },
     { "tag": "OK", "text": "mode  > AI-assisted engineering: design > build > verify > learn" },
     { "tag": "RUN", "text": "loading monitored assets ......................... 7 found" }
   ],

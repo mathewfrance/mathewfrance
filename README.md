@@ -1,10 +1,10 @@
 <picture>
   <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img alt="Terminal boot log: Matheus França, Cyber Monitoring Analyst and Software Builder, with a radar tracking 7 projects" src="assets/hero-dark.svg" width="100%">
+  <img alt="Terminal boot log: Matheus França, software developer by day and SOC monitoring analyst by night, with a radar tracking 7 projects" src="assets/hero-dark.svg" width="100%">
 </picture>
 
 <p align="center">
-  <b>I watch systems for a living, and build my own after hours.</b><br>
+  <b>I build software by day and watch systems by night.</b><br>
   <sub><i>Construindo as ideias que antes não cabiam no tempo.</i></sub>
 </p>
 
