@@ -1,33 +1,43 @@
-# Bem vindo meu perfil no GitHub ✌️
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
+  <img alt="Terminal boot log: Matheus França, Cyber Monitoring Analyst and Software Builder, with a radar tracking 7 projects" src="assets/hero-dark.svg" width="100%">
+</picture>
 
-Olá eu sou o Matheus, um desenvolvedor de software apaixonado por tecnologia e inovação.
+<p align="center">
+  <b>I watch systems for a living, and build my own after hours.</b><br>
+  <sub><i>Construindo as ideias que antes não cabiam no tempo.</i></sub>
+</p>
 
-## 🚀 Sobre Mim
-Com quase seis anos de experiência em suporte técnico, estou em transição para a área de desenvolvimento de software, buscando sempre aprender e melhorar minhas habilidades.
+### `▸ monitored assets`
 
-![Mathew France GitHub stats](https://github-readme-stats.vercel.app/api?username=mathewfrance&show_icons=true&theme=dracula)
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/hosts-light.svg">
+  <img alt="Status board with the projects I am running: gym-app, space-agent, prova.ai, veste.ai, amandavidal.adv.br, efs-sports and claude-kit" src="assets/hosts-dark.svg" width="100%">
+</picture>
 
-## 🛠️ Habilidades Técnicas (Hard Skills)
-<div style="display: inline_block"><br/>
-  <img aling="center" alt="html5" src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-  <img aling="center" alt="css3" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"><br/>
-  <img aling="center" alt="javascript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-  <img aling="center" alt="python" src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white">
-  <img aling="center" alt="java" src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"><br/>
-  <img aling="center" alt="mysql" src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white">
-  <img aling="center" alt="mariadb" src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white"><br/>
-</div><br/>
+<!-- links:start -->
+<p align="center"><sub>live endpoints:</sub> <a href="https://prova-ai-lp.vercel.app"><code>prova.ai</code></a> · <a href="https://amandavidal.adv.br"><code>amandavidal.adv.br</code></a><br><sub>most repos are private (client and product work). Ask me for a walkthrough.</sub></p>
+<!-- links:end -->
 
-## 🌟 Habilidades Interpessoais (Soft Skills)
+### `▸ event stream`
 
-- **Comunicação**: Experiência em documentar e comunicar problemas técnicos de forma clara.
-- **Gestão de Tempo**: Organização de tarefas e cumprimento de prazos.
-- **Resolução de Problemas**: Análise e solução eficiente de problemas complexos.
-- **Adaptabilidade**: Capacidade de aprender novas tecnologias e se adaptar a mudanças rapidamente.
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/feed-light.svg">
+  <img alt="Recent activity log: deploys, releases and public commits" src="assets/feed-dark.svg" width="100%">
+</picture>
 
-## 📫 Como me Encontrar
+### `▸ installed stack`
 
-- LinkedIn: [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mathew-france/)<br/>
-- Email: [matheusfranca1202@gmail.com](mailto:matheusfranca1202@gmail.com)<br/>
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="assets/stack-light.svg">
+  <img alt="Stack by layer: frontend, backend, data, cloud and infra, security ops, AI engineering" src="assets/stack-dark.svg" width="100%">
+</picture>
 
-- GitHub: [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mathewfrance/)
+### `▸ open a channel`
+
+<p>
+  <a href="https://www.linkedin.com/in/mathew-france/"><img alt="LinkedIn" src="https://img.shields.io/badge/linkedin-mathew--france-0A66C2?style=flat-square&logo=linkedin&logoColor=white"></a>
+  <a href="mailto:matheusfranca1202@gmail.com"><img alt="Email" src="https://img.shields.io/badge/email-matheusfranca1202-334155?style=flat-square&logo=gmail&logoColor=white"></a>
+</p>
+
+<sub>Panels are SVGs rendered daily by <a href=".github/workflows/render.yml">a GitHub Action</a> from <a href="data/projects.json"><code>data/projects.json</code></a> and public activity. No third-party stats service.</sub>

@@ -1,0 +1,109 @@
+{
+  "$comment": "Fonte única do painel. Só entra aqui o que pode ser público: nada de domínio interno, IP, nome de cliente sem autorização ou detalhe de infraestrutura.",
+  "profile": {
+    "login": "mathewfrance",
+    "user": "mathew",
+    "name": "Matheus França",
+    "role": "Cyber Monitoring Analyst · Software Builder",
+    "host": "sec-ops",
+    "theme": "ops"
+  },
+  "boot": [
+    { "tag": "OK", "text": "init  > uplink to github.com/mathewfrance established" },
+    { "tag": "OK", "text": "2018  > IT support: endpoints, networks, users, tickets" },
+    { "tag": "OK", "text": "edu   > Graduated in Cyber Defense" },
+    { "tag": "OK", "text": "now   > SOC monitoring by day, shipping software by night" },
+    { "tag": "OK", "text": "mode  > AI-assisted engineering: design > build > verify > learn" },
+    { "tag": "RUN", "text": "loading monitored assets ......................... 7 found" }
+  ],
+  "statuses": {
+    "ONLINE": "live in production",
+    "STAGING": "running as demo / MVP",
+    "BUILDING": "under active development",
+    "VALIDATING": "awaiting client sign-off",
+    "STANDBY": "paused, kept for reference"
+  },
+  "hosts": [
+    {
+      "id": "HOST-01",
+      "name": "gym-app",
+      "role": "Local-first training log to track gym progress",
+      "stack": ["Cloudflare Pages", "AWS EC2", "Supabase", "Postgres"],
+      "status": "BUILDING",
+      "kind": "personal",
+      "since": "2026-10"
+    },
+    {
+      "id": "HOST-02",
+      "name": "space-agent",
+      "role": "Modular local AI agent: CLI, SQLite FTS5, Ollama",
+      "stack": ["Python", "Typer", "SQLite", "Ollama", "Docker"],
+      "status": "BUILDING",
+      "kind": "personal",
+      "since": "2026"
+    },
+    {
+      "id": "HOST-03",
+      "name": "prova.ai",
+      "role": "Virtual try-on SaaS: landing, web app and API",
+      "stack": ["Next.js", "TypeScript", ".NET 9", "Docker"],
+      "status": "STAGING",
+      "kind": "product",
+      "url": "https://prova-ai-lp.vercel.app",
+      "since": "2025-10"
+    },
+    {
+      "id": "HOST-04",
+      "name": "veste.ai",
+      "role": "First try-on prototype, precursor of prova.ai",
+      "stack": ["Next.js", "TypeScript"],
+      "status": "STANDBY",
+      "kind": "product",
+      "since": "2025-10"
+    },
+    {
+      "id": "HOST-05",
+      "name": "amandavidal.adv.br",
+      "role": "Law firm website: v2 rebuild with own static build",
+      "stack": ["HTML", "CSS", "JS", "Cloudflare"],
+      "status": "ONLINE",
+      "kind": "client",
+      "url": "https://amandavidal.adv.br",
+      "since": "2026-07"
+    },
+    {
+      "id": "HOST-06",
+      "name": "efs-sports",
+      "role": "Carbon wheels landing page for a sports brand",
+      "stack": ["HTML", "CSS", "GSAP", "Cloudflare Pages"],
+      "status": "VALIDATING",
+      "kind": "client",
+      "since": "2026-10"
+    },
+    {
+      "id": "HOST-07",
+      "name": "claude-kit",
+      "role": "Engineering kit for Claude Code: skills, verifier, lessons KB",
+      "stack": ["Node", "Markdown", "Claude Code"],
+      "status": "ONLINE",
+      "kind": "tooling",
+      "since": "2026-10"
+    }
+  ],
+  "stack": [
+    { "layer": "FRONTEND", "items": ["TypeScript", "React / Next.js", "HTML / CSS", "Tailwind", "GSAP"] },
+    { "layer": "BACKEND", "items": ["C# / .NET", "Python", "Node.js", "Java", "PHP"] },
+    { "layer": "DATA", "items": ["PostgreSQL / Supabase", "SQLite + FTS5", "MySQL / MariaDB"] },
+    { "layer": "CLOUD & INFRA", "items": ["AWS EC2", "Cloudflare Pages / Workers", "Vercel", "Docker", "Linux / Windows Server"] },
+    { "layer": "SECURITY OPS", "items": ["SOC monitoring", "Alert triage", "Hardening", "Secure by default", "OAuth / RLS"] },
+    { "layer": "AI ENGINEERING", "items": ["Claude Code", "Ollama (local LLMs)", "Agents & MCP", "Verify-first workflow"] }
+  ],
+  "log": [
+    { "ts": "2026-10-14T18:54:00Z", "level": "INFO", "host": "HOST-01", "msg": "api node provisioned on AWS EC2, ssh hardened, bootstrap ok" },
+    { "ts": "2026-10-14T16:20:00Z", "level": "INFO", "host": "HOST-01", "msg": "auth wired: Google OAuth + Supabase, legacy keys disabled" },
+    { "ts": "2026-10-12T20:30:00Z", "level": "WARN", "host": "HOST-05", "msg": "v2 deployed to staging, awaiting client sign-off" },
+    { "ts": "2026-10-11T22:10:00Z", "level": "INFO", "host": "HOST-06", "msg": "landing page shipped for review (static, Cloudflare)" },
+    { "ts": "2026-10-10T06:00:00Z", "level": "INFO", "host": "HOST-07", "msg": "v2.1 released: mandatory verify step + lessons KB" },
+    { "ts": "2025-12-15T19:00:00Z", "level": "INFO", "host": "HOST-03", "msg": "demo flow live: login > upload > try-on > result" }
+  ]
+}
