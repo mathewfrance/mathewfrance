@@ -37,6 +37,10 @@ if (!THEMES[VARIANT]) throw new Error(`variante desconhecida: ${VARIANT}`);
 
 const STATUS_COLOR = { ONLINE: 'ok', STAGING: 'info', BUILDING: 'accent', VALIDATING: 'warn', STANDBY: 'idle' };
 const STATUS_BLINK = { ONLINE: 2.4, STAGING: 2, BUILDING: 1, VALIDATING: 1.6 };
+for (const h of data.hosts) {
+  if (!STATUS_COLOR[h.status]) throw new Error(`${h.id}: status inválido "${h.status}"`);
+  if (h.url && !/^https:\/\//.test(h.url)) throw new Error(`${h.id}: url precisa ser https://`);
+}
 
 // ---------------------------------------------------------------- helpers
 const W = 840;
@@ -198,7 +202,7 @@ function hostsPanel(t) {
     <text x="${x + 92}" y="${y}" font-size="14" font-weight="700" fill="${t.fg}">${esc(fit(name, 22))}</text>
     <text x="310" y="${y}" font-size="12" fill="${t.dim}">${esc(fit(stackTxt, stackMax))}</text>
     <rect x="${n(W - x - pw)}" y="${y - 15}" width="${n(pw)}" height="20" rx="4" fill="${col}" fill-opacity="0.12" stroke="${col}" stroke-opacity="0.6"/>
-    <text x="${n(W - x - pw / 2)}" y="${y - 1}" font-size="11" font-weight="700" fill="${col}" text-anchor="middle" letter-spacing="0.5">${pill}</text>
+    <text x="${n(W - x - pw / 2)}" y="${y - 1}" font-size="11" font-weight="700" fill="${col}" text-anchor="middle" letter-spacing="0.5">${esc(pill)}</text>
     <text x="${x + 92}" y="${y + 20}" font-size="12" fill="${t.dim}"><tspan fill="${t.accent}">${esc(h.kind)}</tspan> · ${esc(fit(h.role, 72))}</text>
   </g>`);
     if (i < hosts.length - 1) out.push(`<line x1="${x}" y1="${y + rowH - 16}" x2="${W - x}" y2="${y + rowH - 16}" stroke="${t.border}" stroke-dasharray="2 4"/>`);
