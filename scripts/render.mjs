@@ -542,7 +542,9 @@ function casesPanelM(t) {
 // ---------------------------------------------------------------- README (bloco gerado)
 function casesBlock() {
   if (LAYOUT !== 'cases') return '';
+  // linha em branco antes do título: sem ela o ### cai dentro do bloco HTML do <p> de links e vira texto
   return `
+
 ### \`▸ case files\`
 
 <picture>
