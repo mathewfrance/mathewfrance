@@ -23,7 +23,7 @@
 <g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.95;1" dur="3.29s" fill="freeze"/><text x="22" y="258" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan> edu &gt; Graduated in Cyber Defense</text></g>
 <g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.96;1" dur="3.61s" fill="freeze"/><text x="22" y="284" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan> now &gt; software developer by day, SOC</text><text x="22" y="304" font-size="14" fill="#d3dceb"><tspan visibility="hidden"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan></tspan> monitoring by night</text></g>
 <g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.96;1" dur="3.93s" fill="freeze"/><text x="22" y="330" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan> mode &gt; AI-assisted engineering:</text><text x="22" y="350" font-size="14" fill="#d3dceb"><tspan visibility="hidden"><tspan fill="#8494b0">[</tspan><tspan fill="#34d399" font-weight="700"> OK </tspan><tspan fill="#8494b0">]</tspan></tspan> design &gt; build &gt; verify &gt; learn</text></g>
-<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.96;1" dur="4.25s" fill="freeze"/><text x="22" y="376" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#fbbf24" font-weight="700">RUN </tspan><tspan fill="#8494b0">]</tspan> loading monitored assets ... 7 found</text></g>
+<g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.96;1" dur="4.25s" fill="freeze"/><text x="22" y="376" font-size="14" fill="#d3dceb"><tspan fill="#8494b0">[</tspan><tspan fill="#fbbf24" font-weight="700">RUN </tspan><tspan fill="#8494b0">]</tspan> loading monitored assets ... 6 found</text></g>
 <g><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.98;1" dur="4.52s" fill="freeze"/><text x="22" y="408" font-size="14" fill="#a78bfa" textLength="142.8" lengthAdjust="spacingAndGlyphs">mathew@sec-ops:~$</text>
     <rect x="173.20000000000002" y="396" width="8" height="15" fill="#22d3ee"><animate attributeName="opacity" values="1;0" dur="1s" calcMode="discrete" repeatCount="indefinite"/></rect></g>
 <circle cx="210" cy="532" r="96" fill="none" stroke="#1f2b40" stroke-width="1"/>
@@ -36,25 +36,22 @@
 <circle cx="274.95" cy="508.36" r="3.5" fill="#22d3ee"/>
     <circle cx="274.95" cy="508.36" r="3.5" fill="none" stroke="#22d3ee" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="4.72s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="4.72s" repeatCount="indefinite"/></circle>
     <text x="281.95" y="512.86" font-size="11" fill="#8494b0">H01</text>
-<circle cx="232.01" cy="466.48" r="3.5" fill="#22d3ee"/>
-    <circle cx="232.01" cy="466.48" r="3.5" fill="none" stroke="#22d3ee" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="4.01s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="4.01s" repeatCount="indefinite"/></circle>
-    <text x="239.01" y="470.98" font-size="11" fill="#8494b0">H02</text>
-<circle cx="181.35" cy="487.65" r="3.5" fill="#60a5fa"/>
-    <circle cx="181.35" cy="487.65" r="3.5" fill="none" stroke="#60a5fa" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="3.29s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="3.29s" repeatCount="indefinite"/></circle>
-    <text x="188.35" y="492.15" font-size="11" fill="#8494b0">H03</text>
-<circle cx="125.94" cy="523.59" r="3.5" fill="#7b8aa3"/>
-    <circle cx="125.94" cy="523.59" r="3.5" fill="none" stroke="#7b8aa3" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="2.58s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="2.58s" repeatCount="indefinite"/></circle>
-    <text x="132.94" y="528.09" font-size="11" fill="#8494b0">H04</text>
-<circle cx="184.53" cy="558.11" r="3.5" fill="#34d399"/>
-    <circle cx="184.53" cy="558.11" r="3.5" fill="none" stroke="#34d399" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="1.87s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="1.87s" repeatCount="indefinite"/></circle>
-    <text x="191.53" y="562.61" font-size="11" fill="#8494b0">H05</text>
-<circle cx="217.4" cy="591.06" r="3.5" fill="#fbbf24"/>
-    <circle cx="217.4" cy="591.06" r="3.5" fill="none" stroke="#fbbf24" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="1.15s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="1.15s" repeatCount="indefinite"/></circle>
-    <text x="224.4" y="595.56" font-size="11" fill="#8494b0">H06</text>
-<circle cx="241.13" cy="551.02" r="3.5" fill="#34d399"/>
-    <circle cx="241.13" cy="551.02" r="3.5" fill="none" stroke="#34d399" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="0.44s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="0.44s" repeatCount="indefinite"/></circle>
-    <text x="248.13" y="555.52" font-size="11" fill="#8494b0">H07</text>
-<text x="210" y="646" font-size="12.5" fill="#8494b0" text-anchor="middle">7 assets · 2 online · 2 building</text>
+<circle cx="216.33" cy="496.07" r="3.5" fill="#34d399"/>
+    <circle cx="216.33" cy="496.07" r="3.5" fill="none" stroke="#34d399" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="3.89s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="3.89s" repeatCount="indefinite"/></circle>
+    <text x="223.33" y="500.57" font-size="11" fill="#8494b0">H02</text>
+<circle cx="157.05" cy="487.57" r="3.5" fill="#22d3ee"/>
+    <circle cx="157.05" cy="487.57" r="3.5" fill="none" stroke="#22d3ee" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="3.06s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="3.06s" repeatCount="indefinite"/></circle>
+    <text x="164.05" y="492.07" font-size="11" fill="#8494b0">H03</text>
+<circle cx="160.38" cy="550.06" r="3.5" fill="#60a5fa"/>
+    <circle cx="160.38" cy="550.06" r="3.5" fill="none" stroke="#60a5fa" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="2.22s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="2.22s" repeatCount="indefinite"/></circle>
+    <text x="167.38" y="554.56" font-size="11" fill="#8494b0">H04</text>
+<circle cx="199.66" cy="590.62" r="3.5" fill="#fbbf24"/>
+    <circle cx="199.66" cy="590.62" r="3.5" fill="none" stroke="#fbbf24" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="1.39s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="1.39s" repeatCount="indefinite"/></circle>
+    <text x="206.66" y="595.12" font-size="11" fill="#8494b0">H05</text>
+<circle cx="255.59" cy="570.26" r="3.5" fill="#fbbf24"/>
+    <circle cx="255.59" cy="570.26" r="3.5" fill="none" stroke="#fbbf24" opacity="0"><animate attributeName="r" values="3.5;11" dur="5s" begin="0.56s" keyTimes="0;1" keySplines="0.2 0.6 0.4 1" calcMode="spline" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.25;1" dur="5s" begin="0.56s" repeatCount="indefinite"/></circle>
+    <text x="262.59" y="574.76" font-size="11" fill="#8494b0">H06</text>
+<text x="210" y="646" font-size="12.5" fill="#8494b0" text-anchor="middle">6 assets · 1 online · 2 building</text>
   </g>
   
 </g>

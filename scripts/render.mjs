@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Gera os SVGs do perfil a partir de data/projects.json (+ eventos públicos do GitHub).
-// Zero dependências. Uso: node scripts/render.mjs [--variant ops|phosphor] [--out dir] [--offline]
+// Zero dependências. Uso: node scripts/render.mjs [--variant ops|phosphor] [--layout compact|brief|cases] [--out dir] [--offline]
 //
 // Regra de animação: o valor base de cada atributo é o estado FINAL (visível). As animações
 // SMIL começam em 0s e partem do estado inicial, então um renderizador sem SMIL mostra tudo.
@@ -21,6 +21,10 @@ const OFFLINE = args.includes('--offline');
 const data = JSON.parse(await readFile(path.join(ROOT, 'data/projects.json'), 'utf8'));
 const VARIANT = opt('variant', data.profile.theme);
 const OUT = path.resolve(opt('out', ROOT));
+// compact: 1 linha por projeto · brief: + linha de segurança no painel · cases: painel "case files" à parte
+const LAYOUT = opt('layout', data.profile.layout || 'compact');
+if (!['compact', 'brief', 'cases'].includes(LAYOUT)) throw new Error(`layout desconhecido: ${LAYOUT}`);
+for (const b of data.boot) b.text = b.text.replace('{count}', String(data.hosts.length));
 
 // ---------------------------------------------------------------- temas
 // Só escuro: o painel fica escuro também no tema claro do navegador (fundo branco deixava o
@@ -40,6 +44,7 @@ const STATUS_BLINK = { ONLINE: 2.4, STAGING: 2, BUILDING: 1, VALIDATING: 1.6 };
 for (const h of data.hosts) {
   if (!STATUS_COLOR[h.status]) throw new Error(`${h.id}: status inválido "${h.status}"`);
   if (h.url && !/^https:\/\//.test(h.url)) throw new Error(`${h.id}: url precisa ser https://`);
+  if (LAYOUT !== 'compact' && !['problem', 'build', 'security'].every((k) => h.case?.[k])) throw new Error(`${h.id}: case.problem/build/security obrigatórios no layout ${LAYOUT}`);
 }
 
 // ---------------------------------------------------------------- helpers
@@ -252,7 +257,8 @@ function hostsPanel(t) {
   out.push(`<line x1="${x}" y1="78" x2="${W - x}" y2="78" stroke="${t.border}"/>`);
 
   let y = 104;
-  const rowH = 50;
+  const brief = LAYOUT === 'brief';
+  const rowH = brief ? 70 : 50;
   hosts.forEach((h, i) => {
     const col = t[STATUS_COLOR[h.status]];
     const at = 0.2 + i * 0.12;
@@ -272,11 +278,12 @@ function hostsPanel(t) {
     <rect x="${n(W - x - pw)}" y="${y - 15}" width="${n(pw)}" height="20" rx="4" fill="${col}" fill-opacity="0.12" stroke="${col}" stroke-opacity="0.6"/>
     <text x="${n(W - x - pw / 2)}" y="${y - 1}" font-size="11" font-weight="700" fill="${col}" text-anchor="middle" letter-spacing="0.5">${esc(pill)}</text>
     <text x="${x + 92}" y="${y + 20}" font-size="12" fill="${t.dim}"><tspan fill="${t.accent}">${esc(h.kind)}</tspan> · ${esc(fit(h.role, 72))}</text>
+    ${brief ? `<text x="${x + 92}" y="${y + 40}" font-size="12" fill="${t.fg}"><tspan fill="${t.ok}">sec ›</tspan> ${esc(fit(h.case.security, Math.floor((W - 2 * x - 92) / cw(12)) - 6))}</text>` : ''}
   </g>`);
     if (i < hosts.length - 1) out.push(`<line x1="${x}" y1="${y + rowH - 16}" x2="${W - x}" y2="${y + rowH - 16}" stroke="${t.border}" stroke-dasharray="2 4"/>`);
     y += rowH;
   });
-  const h = y - rowH + 46;
+  const h = y - rowH + (brief ? 64 : 46);
   return frame(t, { h, title: 'asset-inventory — status board', right: `${hosts.length} hosts`, body: out.join('\n'), fx: true });
 }
 
@@ -393,6 +400,13 @@ function hostsPanelM(t) {
     rN.forEach((l, j) => role.push(`<text x="${x + 22}" y="${y + 23 + (j + 1) * 19}" font-size="13" fill="${t.dim}">${esc(l)}</text>`));
     const sy3 = y + 23 + rN.length * 19 + 21;
     const stk = wrap(h.stack.join(' / '), Math.floor((w - 2 * x - 22) / cw(12.5)), 2).map((l, j) => `<text x="${x + 22}" y="${sy3 + j * 18}" font-size="12.5" fill="${t.idle}">${esc(l)}</text>`);
+    if (LAYOUT === 'brief') {
+      // linha de segurança: "sec ›" colorido + texto, com recuo invisível na continuação
+      const sy4 = sy3 + (stk.length - 1) * 18 + 22;
+      const tag = `<tspan fill="${t.ok}">sec ›</tspan>`;
+      wrap(h.case.security, Math.floor((w - 2 * x - 22) / cw(12.5)) - 6, 3).forEach((l, j) =>
+        stk.push(`<text x="${x + 22}" y="${sy4 + j * 18}" font-size="12.5" fill="${t.fg}">${j ? `<tspan visibility="hidden">sec ›</tspan>` : tag} ${esc(l)}</text>`));
+    }
     out.push(`<g>${fadeIn(0.2 + i * 0.12, 0.3)}
     ${led}
     <text x="${x + 22}" y="${y}" font-size="12" fill="${t.dim}">${esc(h.id)}</text>
@@ -402,7 +416,7 @@ function hostsPanelM(t) {
     ${role.join('')}
     ${stk.join('')}
   </g>`);
-    y = sy3 + (stk.length - 1) * 18 + 20;
+    y = sy3 + (stk.length - 1) * 18 + (LAYOUT === 'brief' ? 4 + 20 : 20); // sec fica 22 abaixo da stack (4 além do passo de 18)
     if (i < hosts.length - 1) out.push(`<line x1="${x}" y1="${y}" x2="${w - x}" y2="${y}" stroke="${t.border}" stroke-dasharray="2 4"/>`);
     y += 30;
   });
@@ -460,7 +474,84 @@ function stackM(t) {
   return frame(t, { w, h: cy - gap + 22, title: 'packages — installed stack', right: `${layers.reduce((s, l) => s + l.items.length, 0)} pkgs`, body: out.join('\n'), fx: true });
 }
 
+// ---------------------------------------------------------------- case files (layout "cases")
+// Um card por projeto: problema, construção e segurança. Projetos de cliente já vêm anonimizados no JSON.
+const CASE_FIELDS = [['PROBLEM', 'problem'], ['BUILD', 'build'], ['SECURITY', 'security']];
+
+// Devolve { h, svg }: a altura sai do mesmo cálculo que posiciona o texto.
+function caseCard(t, h, cx, cy, cardW, { fs, lineH, cols }) {
+  const col = t[STATUS_COLOR[h.status]];
+  const px = cx + 16;
+  const parts = [];
+  let y = cy + 28;
+  const pw = h.status.length * cw(10.5) + 14;
+  const nameX = px + 8 * cw(11);
+  parts.push(`<text x="${n(px)}" y="${y}" font-size="11" fill="${t.dim}">${esc(h.id)}</text>
+    <text x="${n(nameX)}" y="${y}" font-size="${fs + 2}" font-weight="700" fill="${t.fg}">${esc(fit(h.name, Math.floor((cx + cardW - 24 - pw - nameX) / cw(fs + 2))))}</text>
+    <rect x="${n(cx + cardW - 16 - pw)}" y="${y - 14}" width="${n(pw)}" height="19" rx="4" fill="${col}" fill-opacity="0.12" stroke="${col}" stroke-opacity="0.6"/>
+    <text x="${n(cx + cardW - 16 - pw / 2)}" y="${y - 1}" font-size="10.5" font-weight="700" fill="${col}" text-anchor="middle" letter-spacing="0.5">${esc(h.status)}</text>`);
+  y += 20;
+  parts.push(`<text x="${n(px)}" y="${y}" font-size="${fs - 0.5}" fill="${t.idle}"><tspan fill="${t.accent}">${esc(h.kind)}</tspan> · ${esc(fit(h.stack.join(' / '), cols - h.kind.length - 3))}</text>`);
+  y += 12;
+  parts.push(`<line x1="${n(px)}" y1="${y}" x2="${n(cx + cardW - 16)}" y2="${y}" stroke="${t.border}"/>`);
+  y += 4;
+  for (const [label, key] of CASE_FIELDS) {
+    y += lineH;
+    parts.push(`<text x="${n(px)}" y="${y}" font-size="10.5" font-weight="700" letter-spacing="1.5" fill="${key === 'security' ? t.ok : t.accent}">${label}</text>`);
+    for (const l of wrap(h.case[key], cols, 3)) {
+      y += lineH;
+      parts.push(`<text x="${n(px)}" y="${y}" font-size="${fs}" fill="${t.fg}">${esc(l)}</text>`);
+    }
+    y += 6;
+  }
+  return { h: y - cy + 12, svg: parts.join('') };
+}
+
+function casesPanel(t) {
+  const { hosts } = data;
+  const x0 = 26, gap = 14, opts = { fs: 12, lineH: 18 };
+  const cardW = (W - 2 * x0 - gap) / 2;
+  opts.cols = Math.floor((cardW - 32) / cw(opts.fs));
+  const out = [`<text x="${x0}" y="62" font-size="12" fill="${t.dim}">$ cat /srv/cases/*.md --sanitized</text>`];
+  let cy = 80;
+  for (let i = 0; i < hosts.length; i += 2) {
+    const pair = hosts.slice(i, i + 2).map((h, j) => ({ cx: x0 + j * (cardW + gap), h }));
+    const cards = pair.map(({ cx, h }) => ({ cx, ...caseCard(t, h, cx, cy, cardW, opts) }));
+    const rowH = Math.max(...cards.map((c) => c.h));
+    cards.forEach((c, j) => out.push(`<g>${fadeIn(0.2 + (i + j) * 0.12, 0.3)}<rect x="${n(c.cx)}" y="${cy}" width="${n(cardW)}" height="${rowH}" rx="6" fill="${t.bg}" stroke="${t.border}"/>${c.svg}</g>`));
+    cy += rowH + gap;
+  }
+  return frame(t, { h: cy - gap + 24, title: 'case-files — sanitized briefs', right: `${hosts.length} files`, body: out.join('\n'), fx: true });
+}
+
+function casesPanelM(t) {
+  const { hosts } = data;
+  const w = WM, x0 = 22, gap = 12, opts = { fs: 12.5, lineH: 19 };
+  const cardW = w - 2 * x0;
+  opts.cols = Math.floor((cardW - 32) / cw(opts.fs));
+  const out = [`<text x="${x0}" y="60" font-size="12" fill="${t.dim}">$ cat /srv/cases/*.md</text>`];
+  let cy = 78;
+  hosts.forEach((h, i) => {
+    const c = caseCard(t, h, x0, cy, cardW, opts);
+    out.push(`<g>${fadeIn(0.2 + i * 0.12, 0.3)}<rect x="${x0}" y="${cy}" width="${cardW}" height="${c.h}" rx="6" fill="${t.bg}" stroke="${t.border}"/>${c.svg}</g>`);
+    cy += c.h + gap;
+  });
+  return frame(t, { w, h: cy - gap + 22, title: 'case-files — sanitized briefs', right: `${hosts.length} files`, body: out.join('\n'), fx: true });
+}
+
 // ---------------------------------------------------------------- README (bloco gerado)
+function casesBlock() {
+  if (LAYOUT !== 'cases') return '';
+  return `
+### \`▸ case files\`
+
+<picture>
+  <source media="(max-width: 600px)" srcset="assets/cases-dark-m.svg">
+  <img alt="Sanitized case files: for each project, the problem it solves, how it was built and the security measures. Client projects are anonymized." src="assets/cases-dark.svg" width="100%">
+</picture>
+`;
+}
+
 function linksBlock() {
   const live = data.hosts.filter((h) => h.url);
   const links = live.map((h) => `<a href="${esc(h.url)}"><code>${esc(h.name)}</code></a>`).join(' · ');
@@ -471,7 +562,9 @@ async function updateReadme() {
   const file = path.join(OUT, 'README.md');
   if (!existsSync(file)) return;
   const md = await readFile(file, 'utf8');
-  const next = md.replace(/(<!-- links:start -->)[\s\S]*?(<!-- links:end -->)/, `$1\n${linksBlock()}\n$2`);
+  const next = md
+    .replace(/(<!-- links:start -->)[\s\S]*?(<!-- links:end -->)/, `$1\n${linksBlock()}\n$2`)
+    .replace(/(<!-- cases:start -->)[\s\S]*?(<!-- cases:end -->)/, `$1${casesBlock()}$2`);
   if (next !== md) await writeFile(file, next);
 }
 
@@ -484,6 +577,7 @@ for (const mode of Object.keys(THEMES[VARIANT])) {
   const files = {
     hero: hero(t), hosts: hostsPanel(t), feed: feed(t, events), stack: stack(t),
     'hero-m': heroM(t), 'hosts-m': hostsPanelM(t), 'feed-m': feedM(t, events), 'stack-m': stackM(t),
+    ...(LAYOUT === 'cases' ? { cases: casesPanel(t), 'cases-m': casesPanelM(t) } : {}),
   };
   for (const [name, svg] of Object.entries(files)) {
     const [base, suffix] = name.split('-'); // hero-m → assets/hero-dark-m.svg
@@ -493,4 +587,4 @@ for (const mode of Object.keys(THEMES[VARIANT])) {
   }
 }
 await updateReadme();
-console.log(`variante ${VARIANT} → ${OUT}\n  ${written.join('\n  ')}`);
+console.log(`variante ${VARIANT} · layout ${LAYOUT} →${OUT}\n  ${written.join('\n  ')}`);

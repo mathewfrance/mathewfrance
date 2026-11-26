@@ -1,12 +1,13 @@
 {
-  "$comment": "Fonte única do painel. Só entra aqui o que pode ser público: nada de domínio interno, IP, nome de cliente sem autorização ou detalhe de infraestrutura.",
+  "$comment": "Fonte única do painel. Só entra aqui o que pode ser público: nada de domínio interno, IP, nome de cliente sem autorização ou detalhe de infraestrutura. Projetos de cliente ficam anonimizados.",
   "profile": {
     "login": "mathewfrance",
     "user": "mathew",
     "name": "Matheus França",
     "role": "Software Developer · SOC Monitoring Analyst",
     "host": "sec-ops",
-    "theme": "ops"
+    "theme": "ops",
+    "layout": "cases"
   },
   "boot": [
     { "tag": "OK", "text": "init  > uplink to github.com/mathewfrance established" },
@@ -14,7 +15,7 @@
     { "tag": "OK", "text": "edu   > Graduated in Cyber Defense" },
     { "tag": "OK", "text": "now   > software developer by day, SOC monitoring by night" },
     { "tag": "OK", "text": "mode  > AI-assisted engineering: design > build > verify > learn" },
-    { "tag": "RUN", "text": "loading monitored assets ......................... 7 found" }
+    { "tag": "RUN", "text": "loading monitored assets ......................... {count} found" }
   ],
   "statuses": {
     "ONLINE": "live in production",
@@ -28,66 +29,86 @@
       "id": "HOST-01",
       "name": "gym-app",
       "role": "Local-first training log to track gym progress",
-      "stack": ["Cloudflare Pages", "AWS EC2", "Supabase", "Postgres"],
+      "stack": ["Cloudflare Pages", "Node API (Docker)", "Supabase", "Postgres"],
       "status": "BUILDING",
       "kind": "personal",
-      "since": "2026-10"
+      "since": "2026-10",
+      "case": {
+        "problem": "Log sets and loads at the gym, even with no signal, and see progress over time.",
+        "build": "Offline-first PWA syncing to a containerized Node API; Google sign-in through Supabase Auth.",
+        "security": "Row-level security on every table, JWTs verified via JWKS, read-only containers with dropped capabilities, secret scan in CI."
+      }
     },
     {
       "id": "HOST-02",
+      "name": "devhome",
+      "role": "Reproducible dev environment with its own security monitor",
+      "stack": ["WSL2", "Python", "Bash", "Claude Code"],
+      "status": "ONLINE",
+      "kind": "tooling",
+      "since": "2026-10",
+      "case": {
+        "problem": "One environment that rebuilds from scratch and tells me when it drifts from a secure baseline.",
+        "build": "Bootstrap scripts, a findings collector with tickets and accepted-risk rules, a lessons KB and AI agent skills.",
+        "security": "Pre-commit secret scanning, findings ranked by severity, every change closed by a verification report."
+      }
+    },
+    {
+      "id": "HOST-03",
       "name": "space-agent",
       "role": "Modular local AI agent: CLI, SQLite FTS5, Ollama",
       "stack": ["Python", "Typer", "SQLite", "Ollama", "Docker"],
       "status": "BUILDING",
       "kind": "personal",
-      "since": "2026"
+      "since": "2026",
+      "case": {
+        "problem": "An assistant with memory that runs on my machine instead of a third-party cloud.",
+        "build": "Typer CLI over a modular core: SQLite with FTS5 for local search, Ollama for local models, contracts for MCP and webhooks.",
+        "security": "Local models by default, configuration by environment, structured logs for audit."
+      }
     },
     {
-      "id": "HOST-03",
+      "id": "HOST-04",
       "name": "prova.ai",
       "role": "Virtual try-on SaaS: landing, web app and API",
       "stack": ["Next.js", "TypeScript", ".NET 9", "Docker"],
       "status": "STAGING",
       "kind": "product",
       "url": "https://prova-ai-lp.vercel.app",
-      "since": "2025-10"
-    },
-    {
-      "id": "HOST-04",
-      "name": "veste.ai",
-      "role": "First try-on prototype, precursor of prova.ai",
-      "stack": ["Next.js", "TypeScript"],
-      "status": "STANDBY",
-      "kind": "product",
-      "since": "2025-10"
+      "since": "2025-10",
+      "case": {
+        "problem": "Let shoppers preview a garment on themselves before buying.",
+        "build": "Split into landing page, web app and .NET API; demo flow from login to upload to try-on result.",
+        "security": "API separated from the front end, uploads handled server-side, secrets kept out of the client bundle."
+      }
     },
     {
       "id": "HOST-05",
-      "name": "amandavidal.adv.br",
+      "name": "law-firm-site",
       "role": "Law firm website: v2 rebuild with own static build",
       "stack": ["HTML", "CSS", "JS", "Cloudflare"],
-      "status": "ONLINE",
+      "status": "VALIDATING",
       "kind": "client",
-      "url": "https://amandavidal.adv.br",
-      "since": "2026-07"
+      "since": "2026-07",
+      "case": {
+        "problem": "Replace a template site with a fast, accessible one the client can trust for leads.",
+        "build": "Dependency-free static build with a single layout, deployed to Cloudflare; staging kept out of search engines.",
+        "security": "No backend to attack, consent mode for analytics, legal review gate on privacy policy and terms before launch."
+      }
     },
     {
       "id": "HOST-06",
-      "name": "efs-sports",
+      "name": "sports-landing",
       "role": "Carbon wheels landing page for a sports brand",
       "stack": ["HTML", "CSS", "GSAP", "Cloudflare Pages"],
       "status": "VALIDATING",
       "kind": "client",
-      "since": "2026-10"
-    },
-    {
-      "id": "HOST-07",
-      "name": "claude-kit",
-      "role": "Engineering kit for Claude Code: skills, verifier, lessons KB",
-      "stack": ["Node", "Markdown", "Claude Code"],
-      "status": "ONLINE",
-      "kind": "tooling",
-      "since": "2026-10"
+      "since": "2026-10",
+      "case": {
+        "problem": "Present a premium product line with motion, without a heavy page.",
+        "build": "Static page with GSAP scroll animation and optimized media on Cloudflare Pages.",
+        "security": "Static hosting only, external links isolated, no third-party form handlers."
+      }
     }
   ],
   "stack": [
@@ -99,11 +120,11 @@
     { "layer": "AI ENGINEERING", "items": ["Claude Code", "Ollama (local LLMs)", "Agents & MCP", "Verify-first workflow"] }
   ],
   "log": [
-    { "ts": "2026-10-14T18:54:00Z", "level": "INFO", "host": "HOST-01", "msg": "api node provisioned on AWS EC2, ssh hardened, bootstrap ok" },
+    { "ts": "2026-11-25T12:00:00Z", "level": "INFO", "host": "HOST-02", "msg": "monitor now flags stale backups, failed triage and uncommitted lessons" },
+    { "ts": "2026-10-14T18:54:00Z", "level": "INFO", "host": "HOST-01", "msg": "api node provisioned: hardened host, read-only containers" },
     { "ts": "2026-10-14T16:20:00Z", "level": "INFO", "host": "HOST-01", "msg": "auth wired: Google OAuth + Supabase, legacy keys disabled" },
     { "ts": "2026-10-12T20:30:00Z", "level": "WARN", "host": "HOST-05", "msg": "v2 deployed to staging, awaiting client sign-off" },
     { "ts": "2026-10-11T22:10:00Z", "level": "INFO", "host": "HOST-06", "msg": "landing page shipped for review (static, Cloudflare)" },
-    { "ts": "2026-10-10T06:00:00Z", "level": "INFO", "host": "HOST-07", "msg": "v2.1 released: mandatory verify step + lessons KB" },
-    { "ts": "2025-12-15T19:00:00Z", "level": "INFO", "host": "HOST-03", "msg": "demo flow live: login > upload > try-on > result" }
+    { "ts": "2025-12-15T19:00:00Z", "level": "INFO", "host": "HOST-04", "msg": "demo flow live: login > upload > try-on > result" }
   ]
 }

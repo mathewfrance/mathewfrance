@@ -1,6 +1,6 @@
 <picture>
   <source media="(max-width: 600px)" srcset="assets/hero-dark-m.svg">
-  <img alt="Terminal boot log: Matheus França, software developer by day and SOC monitoring analyst by night, with a radar tracking 7 projects" src="assets/hero-dark.svg" width="100%">
+  <img alt="Terminal boot log: Matheus França, software developer by day and SOC monitoring analyst by night, with a radar tracking 6 projects" src="assets/hero-dark.svg" width="100%">
 </picture>
 
 <p align="center">
@@ -12,12 +12,20 @@
 
 <picture>
   <source media="(max-width: 600px)" srcset="assets/hosts-dark-m.svg">
-  <img alt="Status board with the projects I am running: gym-app, space-agent, prova.ai, veste.ai, amandavidal.adv.br, efs-sports and claude-kit" src="assets/hosts-dark.svg" width="100%">
+  <img alt="Status board with the projects I am running: gym-app, devhome, space-agent, prova.ai and two anonymized client sites (a law firm and a sports brand)" src="assets/hosts-dark.svg" width="100%">
 </picture>
 
 <!-- links:start -->
-<p align="center"><sub>live endpoints:</sub> <a href="https://prova-ai-lp.vercel.app"><code>prova.ai</code></a> · <a href="https://amandavidal.adv.br"><code>amandavidal.adv.br</code></a><br><sub>most repos are private (client and product work). Ask me for a walkthrough.</sub></p>
+<p align="center"><sub>live endpoints:</sub> <a href="https://prova-ai-lp.vercel.app"><code>prova.ai</code></a><br><sub>most repos are private (client and product work). Ask me for a walkthrough.</sub></p>
 <!-- links:end -->
+<!-- cases:start -->
+### `▸ case files`
+
+<picture>
+  <source media="(max-width: 600px)" srcset="assets/cases-dark-m.svg">
+  <img alt="Sanitized case files: for each project, the problem it solves, how it was built and the security measures. Client projects are anonymized." src="assets/cases-dark.svg" width="100%">
+</picture>
+<!-- cases:end -->
 
 ### `▸ event stream`
 
